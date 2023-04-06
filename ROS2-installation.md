@@ -29,7 +29,9 @@
 
     To undo this, locate your system’s shell startup script and remove the appended source command.
 
-2. Check environment variables
+2. Restart terminal!
+
+3. Check environment variables
 
         printenv | grep -i ROS
 

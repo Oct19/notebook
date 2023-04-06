@@ -25,6 +25,7 @@
 
                 140.82.112.4 github.com
                 199.232.69.194 github.global.ssl.fastly.net
+                185.199.108.133 raw.githubusercontent.com
 
     4. Clear DNS cache:
 
@@ -32,13 +33,7 @@
 
 ## Additional Installation and Customization
 
-1. Github Command Line Interface
-
-        curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
-        && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
-        && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-        && sudo apt update \
-        && sudo apt install gh -y
+1. Setup Github SSH key: See Github website for SSH support
 
 2. Chinese Pinyin keyboard input
 
