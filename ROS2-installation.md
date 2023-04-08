@@ -44,7 +44,34 @@
    printenv | grep -i ROS
 8. Run ROS example
 
+<<<<<<< HEAD
    ``ros2 run demo_nodes_cpp talker``
+=======
+    To undo this, locate your system’s shell startup script and remove the appended source command.
+
+2. Restart terminal!
+
+3. Check environment variables
+
+        printenv | grep -i ROS
+
+## Testing
+
+1. To check if ROS2 is installed
+
+    - In one terminal, run
+
+                ros2 run demo_nodes_cpp talker
+
+    - In another terminal, run
+
+                ros2 run demo_nodes_py listener
+
+    - Run Turtlesim
+
+                sudo apt install -y ros-humble-turtlesim
+                ros2 run turtlesim turtlesim_node
+>>>>>>> a45971f1b3ddf6c09ddbec5a49c79c35f91ce073
 
 ## Issues
 
