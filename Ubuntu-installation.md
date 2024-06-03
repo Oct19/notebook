@@ -20,7 +20,7 @@
 * Install useful packages
 
   ```bash
-  sudo apt install vim git ibus ibus-pinyin ubuntu-restricted-extras libfuse2 dconf-editor gh -y
+  sudo apt install vim git ibus ibus-pinyin ubuntu-restricted-extras libfuse2 dconf-editor gh alacarte -y
   ```
 
 * (Optional) Download [clash-verge](https://github.com/clash-verge-rev/clash-verge-rev/releases) for VPN service
@@ -42,4 +42,18 @@
   set fileencodings=utf-8,gb2312,gbk,gb18030
   set termencoding=utf-8
   set encoding=prc
+  ```
+
+* Use alacarte to customize Searchable Apps
+
+  ```bash
+  alararte
+  ```
+
+* Fix snap store update problem
+
+  ```bash
+  sudo snap refresh snap-store
+  # prompt saying "snap-store" has running apps, pids: 1234
+  kill 1234
   ```
