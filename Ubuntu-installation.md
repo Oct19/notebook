@@ -16,13 +16,11 @@
   alias update='sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y'
   # save the file, and restart the terminal
   ```
-
 * Install useful packages
 
   ```bash
   sudo apt install vim git ibus ibus-pinyin ubuntu-restricted-extras libfuse2 dconf-editor gh alacarte -y
   ```
-
 * (Optional) Download [clash-verge](https://github.com/clash-verge-rev/clash-verge-rev/releases) for VPN service
 * (Optional) Realtime patch: Activate Ubuntu pro and enable Realtime service. In this case, if you have NVIDIA GPU, you need to install the driver manually. This requires you to disable X and nouveau, and install the `.run` file with `IGNORE_PREEMPT_RT_PRESENCE=1`
 * In `Settings>Search`, disable `Characters`
@@ -33,7 +31,6 @@
   # org/gnome/gedit/preferences/encodings
   # Change default to 'uft8','GB18030'
   ```
-
 * View Chinese characters in Vim
 
   ```bash
@@ -56,4 +53,10 @@
   sudo snap refresh snap-store
   # prompt saying "snap-store" has running apps, pids: 1234
   kill 1234
+  ```
+
+* To disable the shutdown/reboot timer
+
+  ```bash
+  gsettings set org.gnome.SessionManager logout-prompt false
   ```
