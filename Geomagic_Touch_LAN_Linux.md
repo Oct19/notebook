@@ -12,4 +12,16 @@ Additional notes:
 
 * After connecting the device using LAN to USB converter, the device will show up in `Settings-Network-USB Ethernet`. Open the setting for this network,  select  `IPv4-IPv4Method-Link-Local Only`
 * In `Touch Setup-Hardware-Interface`, select `LAN Port`
-* QT5 need to be installed. On Ubuntu 22.04, newer version or QT might be installed, and you need to [manually install QT5 and change the Qt version](https://askubuntu.com/questions/1404263/how-do-you-install-qt-on-ubuntu22-04)
+* Everytime the device is disconnected, need to run Touch_Setup to pair again
+
+* To build and run OpenHaptics examples:
+
+    ```bash
+    sudo apt install gcc build-essential freeglut3-dev lib32z1-dev
+    ```
+
+## TODO
+
+* Touch_Diagnostic is not running. Error message: `./Touch_Diagnostic: symbol lookup error: ./Touch_Diagnostic: undefined symbol: _ZdlPvm, version Qt_5
+`
+* Read OpenHaptics APIguide and programming guide
