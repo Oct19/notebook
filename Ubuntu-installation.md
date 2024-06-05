@@ -40,13 +40,11 @@
   set termencoding=utf-8
   set encoding=prc
   ```
-
 * Use alacarte to customize Searchable Apps
 
   ```bash
   alararte
   ```
-
 * Fix snap store update problem
 
   ```bash
@@ -54,9 +52,14 @@
   # prompt saying "snap-store" has running apps, pids: 1234
   kill 1234
   ```
-
 * To disable the shutdown/reboot timer
 
   ```bash
   gsettings set org.gnome.SessionManager logout-prompt false
+  ```
+* (Optional) Install weixin
+
+  ```bash
+  wget -O- https://deepin-wine.i-m.dev/setup.sh | sh
+  sudo apt install com.qq.weixin.deepin
   ```
