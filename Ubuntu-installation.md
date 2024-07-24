@@ -43,7 +43,7 @@
 * Use alacarte to customize Searchable Apps
 
   ```bash
-  alararte
+  alacarte
   ```
 * Fix snap store update problem
 
