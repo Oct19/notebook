@@ -1,6 +1,12 @@
 # UR10e Ubuntu 22.04 setup
 
 * Install ros2 humble
+* Additional ros2 module to install: ros2controlcli
+
+  ```bash
+  sudo apt-get install ros-${ROS_DISTRO}-ros2controlcli
+  ```
+
 * Install docker
 
   ```bash
