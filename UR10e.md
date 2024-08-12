@@ -62,3 +62,8 @@
   ros2 run ur_client_library start_ursim.sh -m ur10e
 
   ```
+* In new terminal, run rviz
+
+```bash
+ros2 launch ur_robot_driver ur_control.launch.py ur_type:=ur10e robot_ip:=192.168.56.101 launch_rviz:=true
+```
