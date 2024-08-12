@@ -4,9 +4,8 @@
 * Additional ros2 module to install: ros2controlcli
 
   ```bash
-  sudo apt-get install ros-${ROS_DISTRO}-ros2controlcli
+  sudo apt-get install ros-${ROS_DISTRO}-ros2controlcli -y
   ```
-
 * Install docker
 
   ```bash
@@ -52,7 +51,7 @@
   cd ..
   rosdep install
 
-  # Compile
+  # Compile (if compile failed, remove work folder and redo)
   colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
   #source the install file, make sure the swap ur10e with your workspace name
   echo "source ~/ur5_ws/install/local_setup.sh">>~/.bashrc
