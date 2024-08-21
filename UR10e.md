@@ -1,7 +1,11 @@
 # UR10e Ubuntu 22.04 setup
 
 * Install ros2 humble
-* Additional ros2 module to install: ros2controlcli
+* Additional ros2 modules to install
+
+  ```
+  sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers ros2controlcli -y
+  ```
 
   ```bash
   sudo apt-get install ros-${ROS_DISTRO}-ros2controlcli -y
@@ -49,7 +53,7 @@
   sudo rosdepc init 
   sudo rosdepc update
   cd ..
-  rosdep install
+  rosdepc install --from-paths src -y -r
 
   # Compile (if compile failed, remove work folder and redo)
   colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
@@ -57,7 +61,7 @@
   echo "source ~/ur5_ws/install/local_setup.sh">>~/.bashrc
 
   # launch
-  ros2 launch ur_moveit_config ur_moveit.launch.py ur_type:=ur5e launch_rviz:=true
+  ros2 launch ur_moveit_config ur_moveit.launch.py ur_type:=ur10e launch_rviz:=true
   ```
 * URSim
 
@@ -72,3 +76,22 @@
 ```bash
 ros2 launch ur_robot_driver ur_control.launch.py ur_type:=ur10e robot_ip:=192.168.56.101 launch_rviz:=true
 ```
+
+## Connect to real UR10e
+
+* Connect to robot via ethernet, and setup host ip address?
+* ping UR ip to check connection
+* switch UR to remote mode using teaching pendent
+* run driver launch test program
+
+  ```bash
+  ros2 launch ur_robot_driver ur_control.launch.py ur_type:=ur10e robot_ip:=192.168.1.24  launch_rviz:=true
+  ros2 launch ur_robot_driver test_scaled_joint_trajectory_controller.launch.py
+
+  #teaching
+  ros2 launch ur_robot_driver ur_control.launch.py ur_type:=ur10e robot_ip:=192.168.1.24 launch_rviz:=false
+  ros2 launch ur_moveit_config ur_moveit.launch.py ur_type:=ur10e robot_ip:=192.168.1.24 launch_rviz:=true
+
+  #check node
+  ros2 run rqt_graph rqt_graph
+  ```
