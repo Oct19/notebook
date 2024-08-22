@@ -9,3 +9,16 @@ https://docs.ros.org/en/ros2_packages/rolling/api/ur_robot_driver/usage.html
 https://moveit.picknik.ai/humble/doc/tutorials/getting_started/getting_started.html
 
 I can read position from UR now but cannot move UR
+
+https://blog.csdn.net/joyopirate/article/details/129424607
+
+Using keyboard to control UR10:
+1. 使用getCurrentJointValuse()获取当前的关节角度；
+2. 启动订阅键盘事件节点或者简单粗暴的直接接收键盘输入的字符，定义好12个按键，每个关节2个键控制，每次按下会有一个detla弧度作为你的变化量，将这个变化量加到对应的关节角度上；
+3. 调用setJointValueTarget()将修改后的关节角度设置为目标；
+4. 调用move()执行。
+
+
+Trajectory execution fails in Moveit2
+https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver/discussions/472
+

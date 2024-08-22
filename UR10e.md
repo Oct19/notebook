@@ -79,9 +79,9 @@ ros2 launch ur_robot_driver ur_control.launch.py ur_type:=ur10e robot_ip:=192.16
 
 ## Connect to real UR10e
 
-* Connect to robot via ethernet, and setup host ip address?
-* ping UR ip to check connection
-* switch UR to remote mode using teaching pendent
+* Connect to robot via ethernet, and setup host ip address
+* ping UR ip to check connection `ping 192.168.1.24`
+* switch UR to remote mode using teaching pendent(under URCAPs, btm right click play, select remote)
 * run driver launch test program
 
   ```bash
