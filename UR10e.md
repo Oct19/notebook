@@ -1,6 +1,6 @@
 # UR10e Ubuntu 22.04 setup
 
-* Install ros2 humble
+* Install Ubuntu 22.04 with ROS 2 Humble and Moveit2
 * Additional ros2 modules to install
 
   ```
@@ -9,35 +9,6 @@
 
   ```bash
   sudo apt-get install ros-${ROS_DISTRO}-ros2controlcli -y
-  ```
-* Install docker
-
-  ```bash
-  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-  #manage docker as non-root user
-  sudo groupadd docker
-  sudo usermod -aG docker $USER
-  newgrp docker
-  # test
-  docker run hello-world
-  ```
-* Set up docker proxy since it has been banned in China: Check network proxy, it should be something like `127.0.0.1:7897`. Make sure your vpn proxy also use the same port(in this case 7897)
-
-  ```bash
-  sudo vim /etc/docker/daemon.json
-
-  ### Edit the file, note that http and https string are the same
-  {
-    "proxies": {
-      "http-proxy": "http://127.0.0.1:7897",
-      "https-proxy": "http://127.0.0.1:7897",
-      "no-proxy": "*.test.example.com,.example.org,127.0.0.0/8"
-    }
-  }
-
-  ### save and exit
-
-  sudo systemctl restart docker
   ```
 * Setup workspace
 
@@ -58,40 +29,69 @@
   # Compile (if compile failed, remove work folder and redo)
   colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
   #source the install file, make sure the swap ur10e with your workspace name
-  echo "source ~/ur5_ws/install/local_setup.sh">>~/.bashrc
-
-  # launch
-  ros2 launch ur_moveit_config ur_moveit.launch.py ur_type:=ur10e launch_rviz:=true
+  echo "source ~/ur10e_ws/install/local_setup.sh">>~/.bashrc
   ```
-* URSim
 
-  ```bash
-  docker pull universalrobots/ursim_e-series
-  # swap ur10e with other versions
-  ros2 run ur_client_library start_ursim.sh -m ur10e
+## Option 1: Use with UR Simulator
 
-  ```
-* In new terminal, run rviz
+1. Install docker
 
-```bash
-ros2 launch ur_robot_driver ur_control.launch.py ur_type:=ur10e robot_ip:=192.168.56.101 launch_rviz:=true
-```
+   ```bash
+   sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+   #manage docker as non-root user
+   sudo groupadd docker
+   sudo usermod -aG docker $USER
+   newgrp docker
+   sudo vim /etc/docker/daemon.json
+   ```
+1. Set up docker proxy since it has been banned in China: Check Ubuntu network proxy, it should be something like `127.0.0.1:7897`. Make sure your vpn proxy (such as clash verge) also use the same port(in this case 7897). Find your docker settings file `daemon.json ` and add the following lines. (Note that http and https string are the same)
 
-## Connect to real UR10e
+   ```json
+   {
+   "proxies": {
+   "http-proxy": "http://127.0.0.1:7897",
+   "https-proxy": "http://127.0.0.1:7897",
+   "no-proxy": "*.test.example.com,.example.org,127.0.0.0/8"
+   }
+   }
+   ```
+1. Test docker connection
 
-* Connect to robot via ethernet, and setup host ip address
-* ping UR ip to check connection `ping 192.168.1.24`
-* switch UR to remote mode using teaching pendent(under URCAPs, btm right click play, select remote)
-* run driver launch test program
+   ```
+   sudo systemctl restart docker
+   docker run hello-world
+   ```
+1. Open UR Sim
 
-  ```bash
-  ros2 launch ur_robot_driver ur_control.launch.py ur_type:=ur10e robot_ip:=192.168.1.24  launch_rviz:=true
-  ros2 launch ur_robot_driver test_scaled_joint_trajectory_controller.launch.py
+   ```bash
+   docker pull universalrobots/ursim_e-series
+   # swap ur10e with other versions
+   ros2 run ur_client_library start_ursim.sh -m ur10e
+   # Open the link in terminal log in web browser
+   ```
+1. In UR sim, create a new program: `New->Program->URCaps->External Control->Save>Name as 'Remote Control'`
+1. Run the newly created remote control program `Click on the "[>]" button on the bottom left corner, select remote control program`
+1. Use Moveit 2 to move URSim
 
-  #teaching
-  ros2 launch ur_robot_driver ur_control.launch.py ur_type:=ur10e robot_ip:=192.168.1.24 launch_rviz:=false
-  ros2 launch ur_moveit_config ur_moveit.launch.py ur_type:=ur10e robot_ip:=192.168.1.24 launch_rviz:=true
+   ```bash
+   ros2 launch ur_robot_driver ur_control.launch.py ur_type:=ur10e robot_ip:=192.168.56.101 launch_rviz:=false
+   #New terminal
+   ros2 launch ur_moveit_config ur_moveit.launch.py ur_type:=ur10e robot_ip:=192.168.56.101 launch_rviz:=true
+   ```
+1. In Moveit2, you can click on arrows to drag the robotic arm's end effector. In the motion planning windows, click `Plan&Execute`, the robot in UR Sim should move at the same time. Note: all Move command in UR Sim will automaticlly stop the `remote control` program. In this case UR Sim can no longer be controlled remotely, re-run the program to establish remote control.
 
-  #check node
-  ros2 run rqt_graph rqt_graph
-  ```
+## Option 2: Connect to UR real robot
+
+1. Connect to robot via ethernet, and setup host ip address the same as the `HOST IP` on UR teaching pendant
+2. ping UR ip to check connection `ping 192.168.1.24`
+3. switch UR to remote mode using teaching pendent (refer to step 5-6 in Option 2)
+4. Use Moveit 2 to move UR robot
+
+   ```bash
+   ros2 launch ur_robot_driver ur_control.launch.py ur_type:=ur10e robot_ip:=192.168.1.24 launch_rviz:=false
+   #New terminal
+   ros2 launch ur_moveit_config ur_moveit.launch.py ur_type:=ur10e robot_ip:=192.168.1.24 launch_rviz:=true
+
+   #Visualize what is going on...
+   ros2 run rqt_graph rqt_graph
+   ```
